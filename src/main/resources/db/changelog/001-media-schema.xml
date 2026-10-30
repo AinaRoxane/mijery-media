@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001-media-schema" author="mijery">
+        <createTable tableName="media_asset">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="owner_sub" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="kind" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="visibility" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="original_key" type="VARCHAR(512)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mime" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bytes" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hash" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMPTZ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMPTZ">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="media_asset" indexName="idx_media_asset_owner">
+            <column name="owner_sub"/>
+        </createIndex>
+
+        <createTable tableName="media_variant">
+            <column name="asset_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="width" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="format" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="watermarked" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="key" type="VARCHAR(512)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bytes" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="media_variant" columnNames="asset_id,width,format,watermarked"/>
+
+        <addForeignKeyConstraint
+                baseTableName="media_variant" baseColumnNames="asset_id"
+                referencedTableName="media_asset" referencedColumnNames="id"
+                constraintName="fk_media_variant_asset"
+                onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>
