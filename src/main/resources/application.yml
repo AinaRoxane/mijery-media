@@ -38,22 +38,12 @@ spring:
 
 mijery:
   media:
-    # Root directory for stored files (originals + variants).
-    # In production, point at a dedicated volume or S3 mount.
-    storage-dir: ${MIJERY_MEDIA_STORAGE_DIR:./media-storage}
-    # libvips binary (must be installed on the host).
-    vips-bin: ${MIJERY_MEDIA_VIPS_BIN:vips}
-    # HMAC secret for signing protected asset URLs.
-    signing-secret: ${MIJERY_MEDIA_SIGNING_SECRET:change-me-in-production}
-    # Signed URL TTL (seconds).
-    signed-url-ttl: ${MIJERY_MEDIA_SIGNED_URL_TTL:600}
-    # Variant widths to pre-generate (pixels).
-    variant-widths: ${MIJERY_MEDIA_VARIANT_WIDTHS:320,640,1080,1600}
-    # Max upload size (bytes).
-    max-upload-bytes: ${MIJERY_MEDIA_MAX_UPLOAD_BYTES:10485760}
-    # Allowed MIME types.
-    allowed-mime-types: image/jpeg,image/png,image/webp,image/gif
-    # Watermark overlay image path (optional; if unset, no watermarked variants).
-    watermark-path: ${MIJERY_MEDIA_WATERMARK_PATH:}
-    # Watermark opacity (0-100).
-    watermark-opacity: ${MIJERY_MEDIA_WATERMARK_OPACITY:35}
+    storage-dir: ${MIJERY_MEDIA_STORAGE_DIR}
+    vips-bin: ${MIJERY_MEDIA_VIPS_BIN}
+    signing-secret: ${MIJERY_MEDIA_SIGNING_SECRET}
+    signed-url-ttl: ${MIJERY_MEDIA_SIGNED_URL_TTL}
+    variant-widths: ${MIJERY_MEDIA_VARIANT_WIDTHS}
+    max-upload-bytes: ${MIJERY_MEDIA_MAX_UPLOAD_BYTES}
+    allowed-mime-types: ${MIJERY_MEDIA_ALLOWED_MIME_TYPES}
+    watermark-path: ${MIJERY_MEDIA_WATERMARK_PATH}
+    watermark-opacity: ${MIJERY_MEDIA_WATERMARK_OPACITY}
