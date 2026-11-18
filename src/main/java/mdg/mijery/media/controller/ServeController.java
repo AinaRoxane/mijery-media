@@ -72,7 +72,7 @@ public class ServeController {
         int width = parseWidth(filename);
         String format = filename.endsWith(".webp") ? "webp" : "jpg";
 
-        Path filePath = storage.resolveVariant(assetId, width, watermarked, format);
+        Path filePath = storage.resolveVariant(asset.getClientId(), assetId, width, watermarked, format);
         if (!Files.exists(filePath)) {
             return ResponseEntity.notFound().build();
         }

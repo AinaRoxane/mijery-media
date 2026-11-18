@@ -6,5 +6,6 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="001-media-schema.xml" relativeToChangelogFile="true"/>
+    <include file="002-tenant-storage.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -46,13 +46,21 @@ public class SignedUrlController {
         if (asset == null) {
             return ResponseEntity.notFound().build();
         }
+
+        // Only advertise a watermarked file that was actually generated. A public asset
+        // never has one, and a protected asset whose product has no logo has none
+        // either; in both cases the plain variant is the correct target. The signature
+        // below still gates delivery of a protected asset.
+        boolean effectiveWatermarked = watermarked
+                && !variantRepo.findByAssetIdAndWatermarked(id, true).isEmpty();
+
         if (asset.getVisibility() != mdg.mijery.media.domain.Visibility.PROTECTED) {
             // Public assets don't need signed URLs
-            String url = "/media/" + id + "/" + width + (watermarked ? "-wm" : "") + ".webp";
+            String url = "/media/" + id + "/" + width + (effectiveWatermarked ? "-wm" : "") + ".webp";
             return ResponseEntity.ok(new SignedUrlResponse(url, null, 0));
         }
 
-        String filename = width + (watermarked ? "-wm" : "") + ".webp";
+        String filename = width + (effectiveWatermarked ? "-wm" : "") + ".webp";
         String path = "/media/" + id + "/" + filename;
         String signedUrl = signedUrlService.sign(path);
 

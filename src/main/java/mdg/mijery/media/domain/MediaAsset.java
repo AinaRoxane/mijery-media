@@ -24,6 +24,18 @@ public class MediaAsset {
     @Column(name = "owner_sub", nullable = false)
     private UUID ownerSub;
 
+    /**
+     * The product (OAuth client id) this asset belongs to, e.g. {@code mdg-chronicles}.
+     *
+     * <p>Mandatory: storage is partitioned per product, and the product's logo is the
+     * watermark applied to its protected derivatives. Kept as the canonical client id
+     * rather than the directory slug so the row stays meaningful if the slug rule
+     * changes; the directory is always derived through
+     * {@link mdg.mijery.media.service.TenantPaths}.
+     */
+    @Column(name = "client_id", nullable = false, length = 100)
+    private String clientId;
+
     /** Kind of asset: image, audio, video, etc. */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
